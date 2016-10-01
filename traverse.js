@@ -24,6 +24,8 @@ var endGraphic;
 var scoreDisplayText;
 var restartButton;
 
+var text;
+
 function preload() {
 	game.load.image('sky', 'hellophaser/assets/sky.png');
 	game.load.image('star', 'hellophaser/assets/star.png');
@@ -50,55 +52,57 @@ function create() {
 	left.onDown.add(turnLeft);
 	right.onDown.add(turnRight);
 
-	scoreTrackingText = game.add.text(10, 10, "Score: 0", { fill: '#d9d9d9', fontSize: 60 });
+	scoreTrackingText = game.add.text(10, 10, "Score: 0", { fill: '#ecefee', font: 'Gill Sans', fontSize: 60 });
 
 	graphicsOne = game.add.graphics();
-	graphicsOne.lineStyle(40, 0xd9d9d9, 1);
-	graphicsOne.drawRect(window.innerWidth / 2 - 25, 200, 40, (Math.random() * 400 + 350));
+	graphicsOne.lineStyle(40, 0xecefee, 1);
+	graphicsOne.drawRect(window.innerWidth / 2 - 20, 200, 40, (Math.random() * 400 + 350));
 	player.moveUp();
 
 	graphicsTwo = game.add.graphics();
-	graphicsTwo.lineStyle(40, 0xd9d9d9, 1);
-	graphicsTwo.drawRect(window.innerWidth / 2 - 25, 200, (Math.random() * 400 + 350), 40);
+	graphicsTwo.lineStyle(40, 0xecefee, 1);
+	graphicsTwo.drawRect(window.innerWidth / 2 - 20, 200, (Math.random() * 400 + 350), 40);
 	player.moveUp();
 
 	startGraphic = game.add.graphics();
-	startGraphic.lineStyle(window.innerWidth * window.innerHeight, 0xd9d9d9, 1);
+	startGraphic.lineStyle(window.innerWidth * window.innerHeight, '0x' + backColor.substr(1), 1);
 	startGraphic.drawRect(0, 0, window.innerWidth, window.innerHeight);
 	game.add.tween(startGraphic).to({alpha: 0}, 1000, "Linear", true, 2500);
 	player.moveUp();
 
-	startText = game.add.text(0, 0, "Traverse", {fill: '#212121', fontSize: 130, boundsAlignH: 'center', boundsAlignV: 'middle'})
+	startText = game.add.text(0, 0, "Traverse", {fill: '#212121', font: 'Gill Sans', fontSize: 130, boundsAlignH: 'center', boundsAlignV: 'middle'})
 	startText.setTextBounds(0, 0, window.innerWidth, window.innerHeight - 200);
 	startText.alpha = 1;
 	game.add.tween(startText).to({alpha: 0}, 1500, "Linear", true, 1500);
 
-	instructionText = game.add.text(0, 0, "Use left and right arrowkeys to move.", {fill: '#212121', fontSize: 50, boundsAlignH: 'center', boundsAlignV: 'middle'})
+	instructionText = game.add.text(0, 0, "Use left and right arrowkeys to move.", {fill: '#212121', font: 'Gill Sans', fontSize: 50, boundsAlignH: 'center', boundsAlignV: 'middle'})
 	instructionText.setTextBounds(0, 0, window.innerWidth, window.innerHeight + 100);
 	instructionText.alpha = 1;
 	game.add.tween(instructionText).to({alpha: 0}, 1500, "Linear", true, 1500);
 
 	endGraphic = game.add.graphics();
-	endGraphic.lineStyle(30, 0xd9d9d9, 0.5);
+	endGraphic.lineStyle(30, 0xecefee, 0.5);
 
 	restartButton = game.add.button(window.innerWidth / 2 - 100, window.innerHeight / 2 + 25, 'restartButton', restart, this, 1, 0, 2, 3);
 	restartButton.alpha = 0;
 
 	mainTimer = game.time.create(this, false);
 
-	mainTimer.loop(15000, switchBackColour, this);
+	mainTimer.loop(10000, switchBackColour, this);
 
-	mainTimer.loop(15000, function() {speed += 2}, this);
+	mainTimer.loop(10000, function() {speed += 1}, this);
 
 	mainTimer.add(4000, function() {mainTimer.loop(1000, function() {score += 1; scoreTrackingText.text = "Score: " + score;}, this)});
 
-	mainTimer.add(4000, function() {speed = 10}, this);
+	mainTimer.add(4000, function() {speed = 5.5}, this);
 
 	mainTimer.start();
 
 	emitter = game.add.emitter(player.x, player.y, 100);
 	emitter.makeParticles(['particle1', 'particle2']);
 	emitter.gravity = 0;
+
+	text = game.add.text(0, 200, "jfdljf");
 }
 
 function update() {
@@ -122,8 +126,10 @@ function update() {
 
 	if (player.overlap(graphicsTwo)) {
 		game.stage.backgroundColor = backColor;
-		if ((graphicsTwo.y > 266 || graphicsTwo.y < 230) && !player.overlap(graphicsOne)) {
+		//if ((graphicsTwo.y > 164 || graphicsTwo.y < 129) && !player.overlap(graphicsOne)) {
+		if ((player.y < graphicsTwo.y + 200 || player.y > graphicsTwo.y + 240) && !player.overlap(graphicsOne)) {
 			endGame();
+		
 		}
 		if (previousGraphics !== 2 && !(player.overlap(graphicsOne))) {
 			direction = Math.floor(Math.random() * 2)
@@ -165,6 +171,8 @@ function update() {
 	} else {
 		endGame();
 	}
+
+    text.text = player.y + " " + (graphicsTwo.y + 40 + 200);
 }
 
 function turnLeft() {
@@ -192,20 +200,22 @@ function endGame() {
 	endTimer = game.time.create();
 	endTimer.add(1500, function() {
 		endGraphic.drawRect(10, 250, window.innerWidth, 30);
-		scoreDisplayText = game.add.text(0, 0, "Your score was " + score, { fill: "#212121", fontSize: "30px", boundsAlignH: "center", boundsAlignV: "middle" });
+		scoreDisplayText = game.add.text(0, 0, "Your score was " + score, { fill: "#212121", font: 'Gill Sans', fontSize: "40px", boundsAlignH: "center", boundsAlignV: "middle" });
 		scoreDisplayText.setTextBounds(0, 250, window.innerWidth, 30);
-		scoreDisplayText.alpha = 0;
-		game.add.tween(scoreDisplayText).to({alpha: 1}, 1500, "Linear", true);
+		scoreDisplayText.alpha = 0.1;
+		//game.add.tween(scoreDisplayText).to({alpha: 1}, 1500, "Linear", true);
 		game.add.tween(restartButton).to({alpha: 1}, 500, "Linear", true);
 		restartButton.bringToTop();
 	});
 	endTimer.start();
 
 	mainTimer.stop();
+
+	endTimer.add(500, function() {endTimer.stop()});
 }
 
 function switchBackColour() {
-	backColor = Phaser.Color.HSLtoRGB(Math.random(), 0.5, 0.8);
+	backColor = Phaser.Color.HSLtoRGB(Math.random(), 0.4, 0.85);
 	backColor = "#" + Phaser.Color.componentToHex(backColor.r) + Phaser.Color.componentToHex(backColor.g) + Phaser.Color.componentToHex(backColor.b);
 }
 
