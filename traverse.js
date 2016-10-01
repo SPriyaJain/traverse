@@ -24,8 +24,6 @@ var endGraphic;
 var scoreDisplayText;
 var restartButton;
 
-var text;
-
 function preload() {
 	game.load.image('sky', 'hellophaser/assets/sky.png');
 	game.load.image('star', 'hellophaser/assets/star.png');
@@ -101,8 +99,6 @@ function create() {
 	emitter = game.add.emitter(player.x, player.y, 100);
 	emitter.makeParticles(['particle1', 'particle2']);
 	emitter.gravity = 0;
-
-	text = game.add.text(0, 200, "jfdljf");
 }
 
 function update() {
@@ -171,8 +167,6 @@ function update() {
 	} else {
 		endGame();
 	}
-
-    text.text = player.y + " " + (graphicsTwo.y + 40 + 200);
 }
 
 function turnLeft() {
@@ -203,7 +197,6 @@ function endGame() {
 		scoreDisplayText = game.add.text(0, 0, "Your score was " + score, { fill: "#212121", font: 'Gill Sans', fontSize: "40px", boundsAlignH: "center", boundsAlignV: "middle" });
 		scoreDisplayText.setTextBounds(0, 250, window.innerWidth, 30);
 		scoreDisplayText.alpha = 0.1;
-		//game.add.tween(scoreDisplayText).to({alpha: 1}, 1500, "Linear", true);
 		game.add.tween(restartButton).to({alpha: 1}, 500, "Linear", true);
 		restartButton.bringToTop();
 	});
