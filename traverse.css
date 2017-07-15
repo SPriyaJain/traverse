@@ -1,58 +1,8 @@
-/* The animation code */
-@keyframes example {
-	0% {background-color: #e6b3b3}
-    1% {background-color: red;}
-    100% {background-color: yellow;}
-}
-
-@keyframes test {
-	0% {font-size: 1em; color: black}
-	100% {font-size: 1em}
-	50% {font-size: 3em}
-}
-
-@keyframes name {
-	40% {opacity: 1}
-	100% {opacity: 0}
-}
-
 body {
-	margin: 0;
+	margin: 0
 }
 
-/* The element to apply the animation to */
-div {
-    width: 100px;
-    height: 100px;
-    background-color: red;
-    animation-name: example;
-    animation-duration: 4s;
-    animation-delay: 4s;
-}
-
-p {
-	font-family: Arial;
-	color: #e6b3b3;
-	animation-name: test;
-	animation-duration: 5s;
-	animation-iteration-count: infinite;
-	animation-delay: 4s;
-}
-
-.name {
-	font-family: Lucida, sans-serif;
-	font-size: 8em;
-	text-align: center;
-	color: white;
-	animation-name: name;
-	animation-duration: 3.5s;
-	opacity: 0;
-}
-
-#blah {
-	font-family: cursive;
-}
-
-#blah:hover {
-	font-family: monospace;
+.fontLoader {
+	font-family: Roboto;
+	visibility: none;
 }
