@@ -8,4 +8,5 @@ Traverse is a 2D browser game using JavaScript and Phaser.JS that continuously g
 Creating Traverse was a challenge in that Phaser.JS, the game engine, relies heavily on its community for documentation and troubleshooting. However, I learned to experiment and quickly learn new technologies through this process.
 
 ![Gameply](https://spriyajain.github.io/img/portfolio/traverse_game_shot.png)
+
 ![An unfortunate end](https://spriyajain.github.io/img/portfolio/traverse_lose_shot.png)
